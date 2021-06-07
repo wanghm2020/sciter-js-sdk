@@ -4,7 +4,7 @@ Instances of the Window class represent desktop windows.
 
 `Window.this` is a reference to current window object - instance of Window class where HTML document is loaded.
 
-#### constructor:
+## constructor:
 
 * `new Window {params}`
 
@@ -27,8 +27,18 @@ Instances of the Window class represent desktop windows.
   * `params.client` : true | false - if `true` then x,y,w,h are coordinates of desired window client box on the screen;
   * `params.alignment` : 1..9 - optional, alignment of the window on monitor, if -1..-9 and parent is provided then it aligns the window against parent window.
   * `params.screen` : integer - optional, number of monitor on multi-home systems.
+  * `params.state` : - optional - window state, is one of:
 
-#### properties:
+    * `Window.WINDOW_HIDDEN`
+    * `Window.WINDOW_SHOWN` - default type
+    * `Window.WINDOW_MAXIMIZED`
+    * `Window.WINDOW_MINIMIZED`
+    * `Window.WINDOW_FULL_SCREEN`
+
+  * `params.url` : string - optional, window html source code file.
+  * `params.parameters` : array | string | object, ... - optional, extra parameters to pass to the new window.
+
+## properties:
  
   * `window.state` - read/write, one of:
     * `Window.WINDOW_SHOWN`
@@ -52,7 +62,7 @@ Instances of the Window class represent desktop windows.
   * `window.parent` - read-only, Window | null - parent window of this one.
   * `window.document` - read-only, Document - root document of the window.
 
-#### methods:
+## methods:
 
   * `window.box(boxPart,boxOf[,"screen"]):[...]` reports geometry of the window, where:
   
@@ -111,7 +121,7 @@ Instances of the Window class represent desktop windows.
     * `"left"`,`"top"`,`"right"`,`"bottom"`,`"width"`,`"height"` - individual integers.
 
   * `Window.this.modal(JSX) : any` - shows message box: `<info>..</info>`, `<alert>..</alert>`, `<error>..</error>`, `<question>..</question>`.
-  * `Window.this.modal{params} : any` - shows new window as dialog, for params see `new Window {params}` above. The function returns window close value of `Window.this.close(valToReturn)` call inside the window. 
+  * `Window.this.modal({params}) : any` - shows new window as dialog, for params see `new Window({params})` above. The function returns window close value of `Window.this.close(valToReturn)` call inside the window. 
 
   * `Window.this.performDrag(data:object, mode: "copy" | "move", dragIcon: Image | Element[, dragIconXoff:int, dragIconYoff:int] ): null | "copy" | "move"` - performs drag-and-drop using system D&D mechanism.
 
@@ -121,7 +131,7 @@ Instances of the Window class represent desktop windows.
     * `file : [path1,path2,...] | path0` - single or multiple file names;
     * `json`: any - any data that can be JSON.stringify'ed;
 
-  * ##### `Window.this.focusable(dir [,reference:element]): element`
+  * #### `Window.this.focusable(dir [,reference:element]): element`
     
     The functions allows to enumerate elements in tab order. _dir_ there is one of:
 
@@ -133,12 +143,31 @@ Instances of the Window class represent desktop windows.
     You can assign found element to `window.focus = element` set focus on it.
 
     
-#### class methods and properties:
+## class methods and properties:
 
-  * `Window.this` - instance of Window class - this window reference;
-  * `Window.screenBox(monitor:integer, what, boxPart)` - reports geometry and information of the given monitor. For _what_ and _boxPart_ parameters see window.screenBox() method above.
+  * `Window.this` 
+    
+    instance of Window class - this window reference;
 
-#### events
+  * `Window.screenBox(monitor:integer, what, boxPart)` 
+   
+    reports geometry and information of the given monitor. For _what_ and _boxPart_ parameters see window.screenBox() method above.
+
+  * `Window.elementAt(screenX,screenY):Element` 
+  
+    returns DOM element under screenX/screenY position. 
+    Note: this method may return DOM element belonging to any Sciter window in current process. 
+
+  * `Window.ticks():milliseconds`
+
+    returns value of internal timer. 
+
+  * `Window.post( ge: Event )`
+
+    posts global event *ge* to all windows in current process.   
+
+
+## events
 
 Use `Window.this.on("eventname", handler)` to subscribe to these events: 
 

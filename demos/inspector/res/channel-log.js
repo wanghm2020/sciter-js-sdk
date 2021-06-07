@@ -63,7 +63,7 @@ export class ChannelLog extends Element
       items: [toeval]
     })
     this.channel.notify("toeval",toeval);
-    return false; // do not propagate, consumed
+    return true; // do not propagate, consumed
   }
 
   list2clipboard() {
