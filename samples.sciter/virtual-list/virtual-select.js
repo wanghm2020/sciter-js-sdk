@@ -24,14 +24,16 @@ export class VirtualList extends Element {
   }
 
   render(props) {
+    if(props)
+      this.props = props;
 
     let list = [];
 
     if(this.vlist) {
       let firstIndex = this.vlist.firstBufferIndex;
       let lastIndex = this.vlist.lastBufferIndex;
-      let firstVisibleIndex = this.vlist.firstVisibleItem?.elementIndex || 0;
-      let lastVisibleIndex = this.vlist.lastVisibleItem?.elementIndex || lastIndex;
+      let firstVisibleIndex = firstIndex + this.vlist.firstVisibleItem?.elementIndex || 0;
+      let lastVisibleIndex = firstIndex + this.vlist.lastVisibleItem?.elementIndex;
 
       let totalItems = this.totalItems();
 
@@ -106,7 +108,7 @@ export class VirtualList extends Element {
 
   renderList(items) // overridable
   { 
-    return <virtual-select styleset={this.styleset}>{ items }</virtual-select>; 
+    return <virtual-select {this.props} styleset={this.styleset}>{ items }</virtual-select>; 
   }
 
   renderItem(item,index) // overridable
@@ -214,7 +216,7 @@ export class VirtualSelect extends VirtualList {
       if((props?.items && (this.items !== props.items)) || !this.vlist) {
         this.items = props?.items || [];
         this.post( () => { this.vlist.navigate("start") } );
-        return this.renderList([]);
+        return this.renderList([],props);
       }
       return super.render();
     }

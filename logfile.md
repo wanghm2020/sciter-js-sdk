@@ -1,3 +1,120 @@
+## 4.4.8.9
+
+### Fixes:
+
+* `overflow:scroll`, fix of non-overflow SB rendering. 
+* [debugging] drain logs (a.k.a. flush) before document unload. See: https://sciter.com/forums/topic/wait-for-closerequest-function-calls-to-complete/
+* leaflet.js compatibility fix, by adding document.createElementNS();  
+* command event "^exec:***" handling fix;
+* [VirtualList] fix of `render()`;
+* [websocket] fix of AV in `new WebSocket("badaddr")`;
+* `Clipboard.has("image"|"file"|"text")` - check if clipboard has needed data;
+* `self` - yet another alias to current namespace ( `self == globalThis` ) 
+* fix of splitter handling in Sciter.Lite.
+* fix of element.click() event click generation.
+
+### New features:
+
+* samples/compatibility.js/.css - compatibility layer for browsers. Not complete, features will be added when required;
+* samples/leaflet/test-geoJSON.htm sample - demo of layers in leaflet;
+
+
+## 4.4.8.8-bis
+
+### Fixes:
+
+* `<select|list treelines>` rendering;
+* leaflet.js compatibility fix;  
+
+
+## 4.4.8.8
+
+### Fixes:
+
+* Fix of `<select|dropdown multiple>`
+* Fix of `Audio.resume()`
+* Fix of https://sciter.com/forums/topic/wrong-style-attribute-in-reactor-when-new-element-has-the-same-tag/ in Sciter.TIS and .JS
+* Sciter.JS: events "change" (synchronous) and "input" (posted, asynchronous) are distinct now. 
+* [virtual-list] + scroll-manner: scroll-manner(animation:false); //to disable animated scroll
+* fix of divide by zero in esoteric situation of zero sized window.
+
+### New features:
+
++ sdk.js/samples.sciter/virtual-list/virtual-multi-column.htm sample.
+
+## 4.4.8.7
+
+### Fixes:
+
+* inspector exe fix to show real DOM structure;
+* [osx] fix of ligatures handling in inputs;
+* [osx] fix of transparent windows handling;
+* [virtual-list] fix of scrollable table;
+* [DOM] <div tabindex> === <div tabindex="0">
+
+## 4.4.8.6
+
+### New features:
+
+* lottie playback API and samples in samples.sciter/lottie/
+* `Window.this.monitor:int` - reports monitor index this window is on;
+* `Window.monitors:int` - number of screens/monitors;
+
+### Fixes:
+
+* [JSX] fix of `<div tabindex state-selected={selected}>` parsing.
+* [API/SOM] _integration.exe_, test of const methods.
+* fix of Color values passing to built-in methods.
+
+## 4.4.8.5
+
+### New features:
+
+* `new Graphics.Image(w,h,painter(gfx))` - generation of image by painting on it.
+* `Window.this.screen:int` - reports monitor index this window is on;
+* `Window.screens:int` - number of screens/monitors; 
+* `Window.screenBox(N, "devicePixelRatio")` - reports dip/ppx ratio on Nth monitor; 
+* New `EDIT_VALUE_CHANGE` event (JS: "change"). Sequence now: 
+ 
+  * `EDIT_VALUE_CHANGING` (JS: "changing") - before changes, sync event;
+  * `EDIT_VALUE_CHANGE` (JS: "change") - immediately after changes but before screen update, sync event;
+  * `EDIT_VALUE_CHANGED` (JS: "input") - after changes, after screen update, async/posted event.
+  * `behavior:video` -> `VIDEO_FRAME_REQUEST` event (a.k.a. animation frame)
+  * `element.state.pixelsIn("1em")` - method to convert CSS length units to CSS pixels.
+  * [DOM] attribute "selectable" - enables "HTML range selection" and copying on given element.
+  * new sample sdk.js/samples.sciter/menu/custom-shape-menu.htm
+
+### Fixes:
+
+* SDK headers reorganization: sciter-x-primitives.h - non-GUI primitive types;
+* fix of console.log() interaction with inspector;
+* `placeholder` runtime change fix;
+* [CSS] `html:owns-focus` flag on active window;
+* [js] persistence fixes;
+* virtual-list mouse hover fix;
+* fix of mouse-over-scrollbar issue, see: https://sciter.com/forums/topic/sciter-scroll-popup-issue/
+* `event.windowX/Y` are in CSS pixels (dips) now.
+* color to string conversion fix.
+* fix of behavior:virtual-list samples.
+* [osx] window update fix on MacOS Mojave.
+* websocket events notification fix.
+
+## 4.4.8.4
+
+### New features:
+
+* [css] rgba(255,255,255,var(opacity)) - rgb() and rgba() may use variables now.
+* `window-state="hidden" | "shown" | "minimized" | "maximized" | "full-screen"` attribute support on HTML element element. This attribute defines initial state of the window.
+
+### Fixes:
+
+* element.append/insert/children fixes;
+* `element.takeOff(...)`  parameters are in dips (CSS pixels);
+* fix of cascaded css vars;
+* `element.componentDidMount()` invocation fix;
+* behavior:pager fix of AV.
+* [Storage] fixes.
+
 ## 4.4.8.3
 
 ### New features:

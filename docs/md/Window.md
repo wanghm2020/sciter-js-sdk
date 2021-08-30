@@ -27,14 +27,14 @@ NOTE: the _window_ below is an instance of Sciter's Window class - e.g. `Window.
   * `params.width` : integer - screen pixels, window width;
   * `params.height` : integer - screen pixels, window height;
   * `params.client` : true | false - if `true` then x,y,w,h are coordinates of desired window client box on the screen;
-  * `params.alignment` : 1..9 - optional, alignment of the window on monitor, if -1..-9 and parent is provided then it aligns the window against parent window.
+  * `params.alignment` : \[1-9\] - optional, alignment of the window on monitor, if \[1-9\] and parent is provided then it aligns the window against parent window. (1 bottom left corner, 2 bottom middle, 3 bottom right corner, 4 middle left, 5 center, 6 middle right, 7 top left corner, 8 top middle, 9 top right corner)
   * `params.screen` : integer - optional, number of monitor on multi-home systems.
   * `params.state` : - optional - window state, is one of:
 
-    * `Window.WINDOW_HIDDEN`
-    * `Window.WINDOW_SHOWN` - default type
-    * `Window.WINDOW_MAXIMIZED`
+    * `Window.WINDOW_SHOWN` - default state
     * `Window.WINDOW_MINIMIZED`
+    * `Window.WINDOW_MAXIMIZED`
+    * `Window.WINDOW_HIDDEN`
     * `Window.WINDOW_FULL_SCREEN`
 
   * `params.url` : string - optional, window html source code file.
@@ -42,12 +42,14 @@ NOTE: the _window_ below is an instance of Sciter's Window class - e.g. `Window.
 
 ## properties:
  
-  * `window.state` - read/write, one of:
-    * `Window.WINDOW_SHOWN`
-    * `Window.WINDOW_MINIMIZED`
-    * `Window.WINDOW_MAXIMIZED`
-    * `Window.WINDOW_FULL_SCREEN`
-    * `Window.WINDOW_HIDDEN`
+  * `window.state:int` - read/write, one of:
+    * 1 `Window.WINDOW_SHOWN` - default state
+    * 2 `Window.WINDOW_MINIMIZED`
+    * 3 `Window.WINDOW_MAXIMIZED`
+    * 4 `Window.WINDOW_HIDDEN`
+    * 5 `Window.WINDOW_FULL_SCREEN`
+  
+  * `window.screen:int` - read-only, returns screen (monitor) index this window is on at the moment. Integer [0 ... Window.screens]
   * `window.graphicsBackend` - read-only, string, reports current graphics backend used: "direct2d", "Skia/OpenGL", etc. 
   * `window.minSize = [w,h]` - get/set minimal size of resizable window. 
   * `window.maxSize = [w,h]` - get/set maximum size of resizable window.
@@ -63,10 +65,11 @@ NOTE: the _window_ below is an instance of Sciter's Window class - e.g. `Window.
   * `window.focus` - read/write, DOM element in focus.
   * `window.parent` - read-only, Window | null - parent window of this one.
   * `window.document` - read-only, Document - root document of the window.
+  * `window.screen` - read-only, integer - screen (monitor) number where this window is on at the moment.
 
 ## methods:
 
-  * `window.box(boxPart,boxOf[,"screen"]):[...]` reports geometry of the window, where:
+  * `window.box(boxPart,boxOf[,relTo[, asPPX : bool ]]):[...]` reports geometry of the window, where:
   
     _boxPart_ defines what part of the box to return, is one of:
   
@@ -78,32 +81,22 @@ NOTE: the _window_ below is an instance of Sciter's Window class - e.g. `Window.
 
     _boxOf_ is one of:
 
-    * `"border"` - border area of the window that includes window caption and borders arouns client area;
-    * `"client"` - client (content) area of the window.  
+    * `"border"` - border area of the window that includes window caption and borders around client area;
+    * `"client"` - client (content) area of the window;
+    * `"caret"` - caret position, relative to client area of the window;
 
-    If _"screen"_ parameter is provided then function returns coordinates relative to screen. 
+    _relTo_ is one of:
 
-    Note: the function returns values in screen pixels.
-  
-  * `window.move(x,y [,width, height [, "client" ]])` - move/size window;
-  * `window.close([value])` - request to close the window, the value is a return value used in modal dialogs;
-  * `window.selectFile(...)` - file open/save dialog, TBD;
-  * `window.selectFolder(...)` - folder open dialog, TBD;
-  * `window.mediaVar(varname[,value])` - gets/sets media variable that can be used in CSS as `@media varname {...}`
-  * `window.mediaVars([values:object])` - gets/sets media variables. 
-  * `window.addEventHandler("eventname", handler)` - subscribe to window related events 
-  * `window.on("eventname", handler)` - subscribe to window related events 
-  * `window.off("eventname" | handler)` - unsubscribe event handler either by name, namespace or handler reference  
-  * `window.xcall(name:string [, arg0, ..., argN]): any`
+    * `"desktop"` - coordinates are relative to desktop (outline of all monitors in the system);
+    * `"monitor"` - coordinates are relative to the monitor this window is replaced on;
+    * `"self"` - coordinates are relative to the origin of window's client area;
+   
+    _asPPX_ is a boolean:
 
-    Interaction with native behaviors attached to the window. `window.xcall("foo")` will end up in [`handle_scripting_call()`](https://github.com/c-smile/sciter-js-sdk/blob/main/include/sciter-x-behavior.h#L749) of native behavior attached to the window using [SciterWindowAttachEventHandler](https://github.com/c-smile/sciter-js-sdk/blob/main/include/sciter-x-behavior.h#L898) API.
+    * `true` - coordinates are in physical device pixels; 
+    * `false` - coordinates are in CSS pixels - 1/96 of inch;
 
-  * `window.trayIcon({image: Graphics.Image, text: string})` - show tray icon with the image and tooltip text.
 
-    Tray icon will generate ["trayiconclick"](#trayiconclick) event on user clicks.
-
-  * `window.trayIcon("remove")` - remove tray icon.
-  * `window.trayIcon("place") : [x,y,w,h]` - reports location of the icon on desktop, coordinates are in screen pixels.
   * `window.screenBox(what [, boxPart])` - reports geometry of monitor this window is on. 
 
     _what_ defines what information to return, is one of:
@@ -121,12 +114,61 @@ NOTE: the _window_ below is an instance of Sciter's Window class - e.g. `Window.
     * `"position"` - [x,y], array, position of the rectangle.
     * `"dimension"` - [w,h], array, dimension of the rectangle.
     * `"left"`,`"top"`,`"right"`,`"bottom"`,`"width"`,`"height"` - individual integers.
+  
+---
 
-  * ##### `window.modal(JSX) : any` 
+  * `window.move(x, y [,width, height [, "client" ]])`
+     
+      move/size window.  
+
+      _x_, _y_, _width_, _height_ are in PPX (physical screen pixels).
+      
+      If _"client"_ is provided then _x_, _y_, _width_, _height_ are treated as window client area coordinates.
+
+  * `window.moveTo(monitor, x, y [,width, height [, "client" ]])`
+  
+    move/size window to particular monitor;
+    
+    _x_, _y_, _width_, _height_ are in DIPs - device independent pixels (a.k.a. CSS pixels).
+
+
+  * <a id="select"></a>`window.selectFile({params})` - file open/save dialog
+    * `mode` : "save"|"open"
+    * `filter` : "title|ext1;ext2", `"HTML File (*.htm,*.html)|*.html;*.htm|All Files (*.*)|*.*"`
+    * `extension` : default file extension, "html"
+    * `caption` : Title of dialog, "Save As"
+    * `path` : initial directory
+
+  * `window.selectFolder(...)` - folder open dialog, TBD;
+
+---
+
+  * `window.mediaVar(varname[,value])` - gets/sets media variable that can be used in CSS as `@media varname {...}`
+  * `window.mediaVars([values:object])` - gets/sets media variables. 
+  * `window.addEventHandler("eventname", handler)` - subscribe to window related events 
+  * `window.on("eventname", handler)` - subscribe to window related events 
+  * `window.off("eventname" | handler)` - unsubscribe event handler either by name, namespace or handler reference  
+  * `window.xcall(name:string [, arg0, ..., argN]): any`
+
+    Interaction with native behaviors attached to the window. `window.xcall("foo")` will end up in [`handle_scripting_call()`](https://github.com/c-smile/sciter-js-sdk/blob/main/include/sciter-x-behavior.h#L749) of native behavior attached to the window using [SciterWindowAttachEventHandler](https://github.com/c-smile/sciter-js-sdk/blob/main/include/sciter-x-behavior.h#L898) API.
+
+
+  * #### `window.doEvent(mode) : any`     
+    
+    Performs system event(s) in application message queue, _mode_ is one of:
+
+    * "wait" - waits for the next event and executes it;
+    * "noWait" - if next event is available executes it otherwise returns immediately;
+    * "untilMouseUp" - executes events until _mouseup_ event arrives, used for various drag cases;
+    * "untilQuit" - performs run loop - executes all events until application quit message arrives;
+    * "I/O" - performs events associated with I/O;
+
+
+  * #### `window.modal(JSX) : any` 
     
     shows message box: `<info>..</info>`, `<alert>..</alert>`, `<error>..</error>`, `<question>..</question>`.
   
-  * ##### `window.modal({params}) : any`
+  * #### `window.modal({params}) : any`
     
     shows new window as dialog, for params see `new Window({params})` above. The function returns window close value of `window.close(valToReturn)` call inside the window. 
 
@@ -138,27 +180,46 @@ NOTE: the _window_ below is an instance of Sciter's Window class - e.g. `Window.
     * `file : [path1,path2,...] | path0` - single or multiple file names;
     * `json`: any - any data that can be JSON.stringify'ed;
 
-  * ##### `window.focusable(dir [,reference:element]): element`
+  * #### `window.focusable(dir [,reference:element]): element`
     
-    The functions allows to enumerate elements in tab order. _dir_ there is one of:
+    The function allows to enumerate elements in tab order. _dir_ there is one of:
 
     * "next" - next focusable element after the _reference_;
     * "prior" - previous focusable element after the _reference_;
     * "first" - first focusable DOM element on the window;
     * "last" - last focusable DOM element on the window;
 
-    You can assign found element to `window.focus = element` set focus on it.
+    _reference_ must be a focusable element : tabindex >= 0, element.state.focusable = true or STATE_FOCUSABLE in native code
+
+    You can assign the found element to `window.focus = element` set the focus on it.
+
+  * `window.close([value])` - request to close the window, the value is a return value used in modal dialogs;
+
+#### trayicon
+
+  * `window.trayIcon({image: Graphics.Image, text: string})` - show tray icon with the image and tooltip text.
+
+    Tray icon will generate ["trayiconclick"](#trayiconclick) event on user clicks.
+
+  * `window.trayIcon("remove")` - remove tray icon.
+  * `window.trayIcon("place") : [x,y,w,h]` - reports location of the icon on desktop, coordinates are in screen pixels.
 
     
 ## class methods and properties:
 
-  * `Window.this` 
+  * `Window.this: Window` 
     
     instance of Window class - this window reference;
 
-  * `Window.screenBox(monitor:integer, what, boxPart)` 
+  * `Window.screens: int` 
+    
+    returns number of screens (monitors) in the system;
+
+  * `Window.screenBox(screen:integer, what[, boxPart])` 
    
-    reports geometry and information of the given monitor. For _what_ and _boxPart_ parameters see window.screenBox() method above.
+    reports geometry and information of the given _screen_ (monitor). For _what_ and _boxPart_ parameters see window.screenBox() method above.
+
+    Additionally _what_ supports "devicePixelRatio" value, in this case the function returns the ratio of the resolution in physical pixels to the resolution in CSS pixels for the given monitor.
 
   * `Window.elementAt(screenX,screenY):Element` 
   

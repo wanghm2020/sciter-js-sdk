@@ -70,7 +70,6 @@ workspace "sciter.sdk"
     defines { "_GNU_SOURCE" }
     buildoptions {
      "`pkg-config gtk+-3.0 --cflags`",      
-     "`pkg-config fontconfig --cflags`",
      "-fPIC",
      "-Wno-unknown-pragmas",
      "-Wno-write-strings",
@@ -133,12 +132,13 @@ project "usciter"
   settargetdir()
 
   filter "system:windows"
-    removeconfigurations { "*skia" }
+    --removeconfigurations { "*skia" }
     files {"include/sciter-*.h",
            "include/sciter-*.hpp",
            "include/aux-*.*",
            "include/sciter-win-main.cpp",
            "include/behaviors/behavior_drawing.cpp",
+           "include/behaviors/behavior_video_generator.cpp",
            "demos/usciter/win-res/usciter.rc",
            "demos/usciter/win-res/dpi-aware.manifest" }
     prebuildcommands { 
@@ -160,6 +160,7 @@ project "usciter"
        "-pthread",
        "-Wl,--no-undefined",
        "-ldl",
+       "-no-pie"
     }
 
   filter {}
@@ -201,6 +202,7 @@ project "inspector"
        "-pthread",
        "-Wl,--no-undefined",
        "-ldl",
+       "-no-pie"
     }
 
   filter {}

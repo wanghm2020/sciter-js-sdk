@@ -26,7 +26,7 @@ sys is built on top of [libuv](https://github.com/libuv/libuv) that Sciter.JS us
 
 #### functions
 
-* `fs.open(): promise(File)`
+* `fs.open(path, flags[, mode]): promise(File)` - [flags](https://nodejs.org/api/fs.html#fs_fspromises_open_path_flags_mode), mode sets the file mode (permission and sticky bits) if the file is created. Default: 0o666
 * `fs.stat(): promise(stat)`
 * `fs.$stat(): stat` - sync version of the above;
 * `fs.lstat(): promise(stat)`
@@ -50,12 +50,12 @@ sys is built on top of [libuv](https://github.com/libuv/libuv) that Sciter.JS us
 
 ### fs.File class - represents file. 
 
-* `file.read()`
-* `file.write()`
-* `file.close()`
-* `file.fileno()`
-* `file.stat()`
-* `file.path`
+* `file.read([lengthToRead:int [, filePosition:int]]): Promise(Uint8Array)`
+* `file.write(string|***Array|ArrayBuffer[,filePosition:int]) : Promise(result:int)` 
+* `file.close() : Promise(result:int)`
+* `file.fileno() : int`
+* `file.stat() : Promise(object)`
+* `file.path : string`
 
 ### fs.Dir class - directory visitor 
 
@@ -64,7 +64,7 @@ sys is built on top of [libuv](https://github.com/libuv/libuv) that Sciter.JS us
 * `dir.next()`
 * `[async iterator]`
 
-## Network functions.
+## Network functions
 
 ### TCP socket class 
 

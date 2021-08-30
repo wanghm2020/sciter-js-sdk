@@ -54,13 +54,14 @@ Window (`<html>`) specific attributes
 | `window-max-height`| maximal height of the window, CSS length units
 | `window-resizable`  | `true\|false\|LENGTH-UNIT` i.e. `10px` counted from window frame inwards
 | `window-blurbehind` | `auto\|dark\|light\|ultra-dark\|ultra-light` translucent effect.
+| `window-state` | `shown\|minimized\|maximized\|full-screen\|hidden` - initial state of HTML window
 | `lang` | ISO 639-1 value, define dictionary for spellcheck, Date...
 
 
 ## Misc
 
 - Sciter allow the use of the custom element tags, make sure to give it a default style.
-- You can show popup with [`Element.popupAt`](Element.md#popup).
-- Attribute events (onclick..) are not supported. (unless you implements method for it to work).
+- You can show popup with [`Element.popup`](Element.md#popup).
+- Attribute events (onclick..) are not supported. (unless you implement method for it to work).
 - String `&platform-cmd-mod;` is replaced with `Ctrl/CMD...`
 - [List of input elements](https://sciter.com/developers/for-web-programmers/input-elements-map/)

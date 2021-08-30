@@ -1,6 +1,6 @@
 # behavior: plaintext
 
-Multiline editting behavior that is optimized to handle relatively large (thousands of lines) texts.
+Multiline editing behavior that is optimized to handle relatively large (thousands of lines) texts.
 
 ## Elements
 
@@ -17,7 +17,7 @@ that this behavior knows about:
 
 ## Model
 
-Plaintext parses each line of text into separate `<text>` element:
+Plaintext parses each line of text into a separate `<text>` element:
 
 ```XML
 <plaintext>
@@ -127,6 +127,10 @@ editor.plaintext.load("file://users/documents/readme.txt");
 * `plaintext.selectRange(startLine:integer, startPosition:integer, endLine:integer, endPosition:integer)`
   
   selects text range;
+
+* `plaintext.selectAll()`
+  
+  selects all text;
 
 * `plaintext.appendLine(text:string | lines: array): true|false`
   

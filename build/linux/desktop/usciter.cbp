@@ -20,7 +20,6 @@
 					<Add option="-D_GNU_SOURCE" />
 					<Add option="-DDEBUG" />
 					<Add option="-D_DEBUG" />
-					<Add option="`pkg-config fontconfig --cflags`" />
 					<Add option="-fPIC" />
 					<Add option="-Wno-unknown-pragmas" />
 					<Add option="-Wno-write-strings" />
@@ -36,6 +35,7 @@
 					<Add option="-pthread" />
 					<Add option="-Wl,--no-undefined" />
 					<Add option="-ldl" />
+					<Add option="-no-pie" />
 				</Linker>
 			</Target>
 			<Target title="Release|x64">
@@ -54,7 +54,6 @@
 					<Add option="-DDEVICE=DESKTOP" />
 					<Add option="-D_GNU_SOURCE" />
 					<Add option="-DNDEBUG" />
-					<Add option="`pkg-config fontconfig --cflags`" />
 					<Add option="-fPIC" />
 					<Add option="-Wno-unknown-pragmas" />
 					<Add option="-Wno-write-strings" />
@@ -72,6 +71,7 @@
 					<Add option="-pthread" />
 					<Add option="-Wl,--no-undefined" />
 					<Add option="-ldl" />
+					<Add option="-no-pie" />
 				</Linker>
 			</Target>
 			<Target title="Debug|arm32">
@@ -87,7 +87,6 @@
 					<Add option="-D_GNU_SOURCE" />
 					<Add option="-DDEBUG" />
 					<Add option="-D_DEBUG" />
-					<Add option="`pkg-config fontconfig --cflags`" />
 					<Add option="-fPIC" />
 					<Add option="-Wno-unknown-pragmas" />
 					<Add option="-Wno-write-strings" />
@@ -102,6 +101,7 @@
 					<Add option="-pthread" />
 					<Add option="-Wl,--no-undefined" />
 					<Add option="-ldl" />
+					<Add option="-no-pie" />
 				</Linker>
 			</Target>
 			<Target title="Release|arm32">
@@ -118,7 +118,6 @@
 					<Add option="-DDEVICE=DESKTOP" />
 					<Add option="-D_GNU_SOURCE" />
 					<Add option="-DNDEBUG" />
-					<Add option="`pkg-config fontconfig --cflags`" />
 					<Add option="-fPIC" />
 					<Add option="-Wno-unknown-pragmas" />
 					<Add option="-Wno-write-strings" />
@@ -135,29 +134,70 @@
 					<Add option="-pthread" />
 					<Add option="-Wl,--no-undefined" />
 					<Add option="-ldl" />
+					<Add option="-no-pie" />
 				</Linker>
 			</Target>
 		</Build>
 		<Unit filename="../../../demos/usciter/usciter.cpp">
+			<Option target="Release|x64" />
+			<Option target="Release|arm32" />
+			<Option target="Debug|arm32" />
+			<Option target="Debug|x64" />
 		</Unit>
 		<Unit filename="../../../include/sciter-gtk-main.cpp">
+			<Option target="Release|x64" />
+			<Option target="Release|arm32" />
+			<Option target="Debug|arm32" />
+			<Option target="Debug|x64" />
 		</Unit>
 		<Unit filename="../../../sqlite/sciter-sqlite-db.cpp">
+			<Option target="Release|x64" />
+			<Option target="Release|arm32" />
+			<Option target="Debug|arm32" />
+			<Option target="Debug|x64" />
 		</Unit>
 		<Unit filename="../../../sqlite/sciter-sqlite-rs.cpp">
+			<Option target="Release|x64" />
+			<Option target="Release|arm32" />
+			<Option target="Debug|arm32" />
+			<Option target="Debug|x64" />
 		</Unit>
 		<Unit filename="../../../sqlite/sciter-sqlite.cpp">
+			<Option target="Release|x64" />
+			<Option target="Release|arm32" />
+			<Option target="Debug|arm32" />
+			<Option target="Debug|x64" />
 		</Unit>
 		<Unit filename="../../../sqlite/sciter-sqlite.h">
+			<Option target="Release|x64" />
+			<Option target="Release|arm32" />
+			<Option target="Debug|arm32" />
+			<Option target="Debug|x64" />
 		</Unit>
 		<Unit filename="../../../sqlite/sqlite-wrap.c">
 			<Option compilerVar="CC" />
+			<Option target="Release|x64" />
+			<Option target="Release|arm32" />
+			<Option target="Debug|arm32" />
+			<Option target="Debug|x64" />
 		</Unit>
 		<Unit filename="../../../sqlite/sqlite-wrap.h">
+			<Option target="Release|x64" />
+			<Option target="Release|arm32" />
+			<Option target="Debug|arm32" />
+			<Option target="Debug|x64" />
 		</Unit>
 		<Unit filename="../../../sqlite/sqlite3.h">
+			<Option target="Release|x64" />
+			<Option target="Release|arm32" />
+			<Option target="Debug|arm32" />
+			<Option target="Debug|x64" />
 		</Unit>
 		<Unit filename="../../../sqlite/sqlite3ext.h">
+			<Option target="Release|x64" />
+			<Option target="Release|arm32" />
+			<Option target="Debug|arm32" />
+			<Option target="Debug|x64" />
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>
