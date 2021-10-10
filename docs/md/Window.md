@@ -27,7 +27,7 @@ NOTE: the _window_ below is an instance of Sciter's Window class - e.g. `Window.
   * `params.width` : integer - screen pixels, window width;
   * `params.height` : integer - screen pixels, window height;
   * `params.client` : true | false - if `true` then x,y,w,h are coordinates of desired window client box on the screen;
-  * `params.alignment` : \[1-9\] - optional, alignment of the window on monitor, if \[1-9\] and parent is provided then it aligns the window against parent window. (1 bottom left corner, 2 bottom middle, 3 bottom right corner, 4 middle left, 5 center, 6 middle right, 7 top left corner, 8 top middle, 9 top right corner)
+  * `params.alignment` : integer - optional, \[1 to 9\] alignment of the window on monitor, if \[-1 to -9\] and parent is provided then it aligns the window against parent window. (1 bottom left corner, 2 bottom middle, 3 bottom right corner, 4 middle left, 5 center, 6 middle right, 7 top left corner, 8 top middle, 9 top right corner)
   * `params.screen` : integer - optional, number of monitor on multi-home systems.
   * `params.state` : - optional - window state, is one of:
 
@@ -66,6 +66,7 @@ NOTE: the _window_ below is an instance of Sciter's Window class - e.g. `Window.
   * `window.parent` - read-only, Window | null - parent window of this one.
   * `window.document` - read-only, Document - root document of the window.
   * `window.screen` - read-only, integer - screen (monitor) number where this window is on at the moment.
+  * `window.parameters` = read-only, any - parameters provided by constructor, available inside the window as they are.
 
 ## methods:
 
@@ -233,7 +234,11 @@ NOTE: the _window_ below is an instance of Sciter's Window class - e.g. `Window.
   * #### `window.trayIcon("place") : [x,y,w,h]` 
   
     reports location of the icon on desktop, coordinates are in screen pixels.
-    
+
+  * #### `window.requestAttention("info" | "alert" | "stop")`
+
+    requests user attention by flashing or bouncing window icon in task/dock bar. 
+
 ## class methods and properties:
 
   * #### `Window.this: Window` 
