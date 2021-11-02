@@ -1,4 +1,4 @@
-import {Router, Link} from "preact-router/index";
+import {Router, Link} from "reactor-router/index";
 
 
 //function Home(){return <div><h1>home</h1></div>;}
