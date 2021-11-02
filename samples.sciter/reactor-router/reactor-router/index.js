@@ -77,7 +77,7 @@ function getMatchingChildren(children, url, invoke=true) {
 			let matches = exec(url, vnode[1].path, vnode[1]);
 			if (matches) {
 				if (invoke !== false) {
-					//复制一个新组件，将url和匹配节点的props都拷贝过去
+					//复制一个新组件，将url和匹配节点的props都拷贝过去当做新对象的props
 					return Reactor.cloneOf(vnode, assign({url}, matches));
 				}
 				//对于不需要新组件的情况，直接返回原来的组件
