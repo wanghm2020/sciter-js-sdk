@@ -1,11 +1,6 @@
 
 const EMPTY = {};
 
-export function cloneElement(vnode, props, kids) {
-  props = props ? Object.assign({},vnode[1],props) : vnode[1];
-  return JSX(vnode[0], props , kids || vnode[2])
-}
-
 export function assign(obj, props) {
 	// eslint-disable-next-line guard-for-in
 	for (let i in props) {
