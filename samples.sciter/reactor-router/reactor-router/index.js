@@ -129,7 +129,7 @@ const Link = (props, kids) =>{
 	//组件参数解释: props 是一个object，存储了所有的参数，kids是一个数组，存储了所有的children
 	//新创建一个vnode, type: [0]:'a' , props: [1]: += onClick, kids: [2]: kids 
 	//简单说，就是建一个a链接，继承原有的path路径和链接名称，添加一个点击事件
-	return JSX('a', assign({onClick: handleLinkClick}, props), kids);
+	return JSX('div', assign({onClick: handleLinkClick, class:"link"}, props), kids);
 };
 
 export { Router, Link };
