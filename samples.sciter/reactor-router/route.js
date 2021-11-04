@@ -93,15 +93,15 @@ class News extends Element {
         return (
 			<div>
 				<nav>
-                  <Link href="/news/sports-news" >sports</Link>
-					<Link href="/news/breaking-news" >breaking</Link>
-              </nav>
-              <main>
-                  <Router url={this.url} onChange={this.onChange}>
-                      <SportsNews path="/news/sports-news"/>
-                      <BreakingNews path="/news/breaking-news"/>
-                  </Router>
-              </main>
+                    <Link href="/news/true/sports-news" >sports</Link>
+					<Link href="/news/false/breaking-news" >breaking</Link>
+				</nav>
+				<main>
+					<Router url={this.url} onChange={this.onChange}>
+					    <SportsNews path="/news/:full/sports-news"/>
+						<BreakingNews path="/news/:full/breaking-news"/>
+					</Router>
+				</main>
 			</div>
 		);
     }
@@ -119,13 +119,13 @@ class App extends Element {
                 <nav>
                     <Link href="/" >home</Link>
                     <Link href="/messages/admin/12345">messages</Link>
-                    <Link href="/news" >news</Link>
+                    <Link href="/news/true" >news</Link>
                 </nav>
                 <main>
                     <Router url={this.url} >
                         <Home path="/" />
                         <Messages path="/messages/:user/:pass"/>
-                        <News path="/news/:*" />
+                        <News path="/news/:full/:*" />
                     </Router>
                 </main>
             </div>
