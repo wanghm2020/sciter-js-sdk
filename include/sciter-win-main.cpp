@@ -92,10 +92,12 @@ namespace sciter {
   void window::expand( bool maximize) { 
     if(_hwnd) ::ShowWindow(_hwnd, maximize? SW_MAXIMIZE :SW_NORMAL ); 
   }
-  void window::dismiss() {
+  void window::request_close() {
     if(_hwnd) ::PostMessage(_hwnd, WM_CLOSE, 0, 0 ); 
   }
-
+  void window::close() {
+    if (_hwnd) ::DestroyWindow(_hwnd);
+  }
   window::window( UINT creationFlags, RECT frame): _hwnd(NULL)
   {
     asset_add_ref();

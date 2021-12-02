@@ -1,3 +1,64 @@
+## 4.4.8.18
+
+### New features:
+
+* [C++ api] + window::eval();
+* [C++ api] + `sciter::window::close()` to force window closure. Also `sciter::window::request_close()`
+* [integration] demos of call_function() and call_method();  
+* `SciterLoadFile()`, support paths starting "./" and "../" - to open resources relative to CWD (whatever it means);
+
+### Fixes:
+
+* scrolling / animated scrolling: "overscroll" feature and touch specific functionality are disabled for now, more problems than solutions;
+* [css] fix of `*` selector specificity handling;
+* [reactor] `element.patch()` refactoring , speed up and better support of fragments;
+* [MacOS] fullscreen fix;
+* [MacOS] `window.move(...)` 1px offset fixed;
+* [MacOS] fix of window closure delay;
+* [MacOS] fix of role="window-caption" handling in custom frames;
+* [win] scapp.exe + productDescription (David's patch);
+* `Graphics.strokeRect()` fix;
+* [inspector] fix of second instance detection handling;
+* Fix of mem-leak alike timers pileup, see: https://sciter.com/forums/topic/serious-memory-leak-that-leads-to-frequent-crashes-reproducible/ ;
+* Fix of popup closure: https://sciter.com/forums/topic/there-are-multiple-elements-on-the-page/ ;
+
+## 4.4.8.17
+
+### New:
+
+* `Graphics.draw(element)`, see: sdk.js/samples.sciter/immediate-mode-painting/draw-element.htm
+* [inspector] eval runs in context of 'this' that is set to current selected element.
+
+### Fixes:
+
+* win7 compatibility of usciter.exe, inspector.exe, etc. Note window-blurbehind works now on Win10 and above;
+* graphics.clearRect() fix on MacOS;
+* `sciter::value::call(...)` fix of error string generation.
+* [MacOS] font ascent / descent calculation fix.
+* [MacOS] fix of "missed idle events" bug that may manifset in non responsive UI.
+* `<toggle disabled>` styling fix.
+* [JS] `event.button` fix, see: https://sciter.com/forums/topic/bug-with-the-evt-button-processing-in-sciterjs/
+
+
+## 4.4.8.16
+
+### New features:
+
+* [Windows] acrylic blur behind [is back](https://sciter.com/windows-acrylic-blur-behind-is-back/).
+* `Window.send(event)` - send event synchronously to all windows.
+* `Window.share : object` - data shared among all windows and documents - application wide data container. 
+* `<select|dropdown>`: 
+  1. `novalue` is back
+  2. event `change` on `<select editable>`: `evt.source` is either `<caption>` or `<option>` that caused the change;
++ sdk.js/widgets/tag-list component.
+
+### Fixes:
+
+* `env.exec(...)` fix. See: https://sciter.com/forums/topic/call-executable-with-args/#post-74647
+* fix of `overflow:scroll;` handling, see: https://sciter.com/forums/topic/scroll-function-will-freeze/
+* event "change" from `<input|date>`;
+* [reactor] reconciliation / focus fix;
+
 ## 4.4.8.15
 
 ### New features:
@@ -26,7 +87,8 @@
 * [MacOS] date.toLocaleDateTimeString() fixes;
 * [Win] Fix of `Clipboard.write(...)` - cleans clipboard first.
 * JS, better error reporting on erroneous modules.
-* Skia backend fix that prevents re-entrant engine creation, affects Sciter.Lite on all platforms and Sciter on MacOS. 
+* Skia backend fix that prevents re-entrant engine creation, affects Sciter.Lite on all platforms and Sciter on MacOS.
+* `document.on("beforeunload", function() { console.log("xxx") })` fix.
 
 
 ## 4.4.8.14
